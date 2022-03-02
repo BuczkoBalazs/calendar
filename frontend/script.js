@@ -18,9 +18,21 @@ const header = (logo) => {
     `
 }
 
-const countryCard = (cards) => {
+const countryCard = (country) => {
     return `
-        <div id="cards"></div>
+        <div id="cards">
+            <span>${country.name}</span>
+            <span>${country.short}</span>
+            <span>${country.population}</span>
+            <img src="${country.flag}"></img>
+            <span>${country.continent}</span>
+        </div>
+    `;
+};
+
+const countryCards = (contentHTML) => {
+    return `
+    <section class="country-cards">${contentHTML}</sectio>
     `
 }
 
@@ -33,11 +45,19 @@ const loadEvent = async _ => {
     // PROCESS DATA
     let countries = countryArr.map(function(country){
         return new Country(country.name.common, country.cca3, country.population, country.flags.svg, country.continents[0])
-    })
-    console.log(countries)
+    });
+    // console.log(countries);
 
-    const rootElement = document.getElementById("root")
-    rootElement.insertAdjacentHTML("beforeend", header("Countries"))
+    const rootElement = document.getElementById("root");
+    
+    rootElement.insertAdjacentHTML("beforeend", header("Countries"));
+    
+    let countryHTML = "";
+    for (const country of countries) {
+        countryHTML += countryCard(country)
+    }
+    rootElement.insertAdjacentHTML("beforeend", countryCards(countryHTML))
+
 };
 
 window.addEventListener("load", loadEvent)
