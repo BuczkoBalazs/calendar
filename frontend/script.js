@@ -1,102 +1,48 @@
-// GET DATA
 
-function Month(name, id, nth, days) {
+function Country(name, short, population, flag, continent){
     this.name = name;
-    this.id = id;
-    this.nth = nth;
-    this.days = days;
-}
+    this.short = short;
+    this.population = population;
+    this.flag = flag;
+    this.continent = continent;
+};
 
-const months = [
-    new Month("january", "jan", 1, 31),
-    new Month("february", "feb", 2, 28),
-    new Month("march", "mar", 3, 31),
-    new Month("april", "apr", 4, 30),
-    new Month("may", "may", 5, 31),
-    new Month("june", "jun", 6, 30),
-    new Month("july", "jul", 7, 31),
-    new Month("august", "aug", 8, 31),
-    new Month("september", "sep", 9, 30),
-    new Month("october", "oct", 10, 31),
-    new Month("november", "nov", 11, 30),
-    new Month("december", "dec", 12, 31),
+// COMPONENTS
 
-]
-
-// console.log(months)
-
-// PREPARE DATA
-
-
-
-// COMPONENTS = HTML ELEMENTS WE WOULD LIKE TO ADD TO THE DOCUMENT LATER
-
-const monthSection = (id, h1, days) => {
+const header = (logo) => {
     return `
-    <section id="${id}">
-        <h1>${h1}</h1>
-        <div class="days">${days}</div>
-    </section>
-    `;
-};
+        <header>
+            <a id="logo">${logo}</a>
+            <button></button>
+        </header>    
+    `
+}
 
-const dayCard = (year, month, day) => {
+const countryCards = (cards) => {
     return `
-    <div class="card">
-        <time>${year}</time>
-        <time>${month}</time>
-        <time>${day}</time>
-        <button class="card-btn">Get day name!</button>
-    </div>
-    `;
-};
-
-const dayCards = (month, callDayCard) => {
-    let toReturn = "";
-    for (let i = 1; i <= month.days; i++) {
-        toReturn += callDayCard(2022, month.nth, i);
-    }
-
-    return toReturn;
-};
-// console.log(dayCards(months[0], dayCard));
-
-// RENDER = ADD THE COMPONENTS TO THE DOCUMENT
-
-const loadEvent = _ => {
-    let content = ""
-    for (const month of months) {
-        content += monthSection(month.id, month.name, dayCards(month, dayCard))
-    }
-    document.getElementById("root").insertAdjacentHTML("beforeend", content)
-
-    const cardList = document.querySelectorAll(".card")
-
-    // clickevent
-/* 
-    function cardButtonClickEvent(event) {
-        event.target.parentElement.classList.toggle("clicked")
-        // console.log(event.target.parentElement)
-    }
-
-    for (const card of cardList) {
-        // console.log(card)
-        card.querySelector("button").addEventListener("click", cardButtonClickEvent)
-    }
-
- */
-
-function clickEvent(event) {
-    if (event.target.classList.contains("card-btn")) {
-        console.log("hello click")
-        event.target.innerHTML = "This btn was clicked!"
-    }
-    // console.log(event.target)
+        <div id="cards"></div>
+    `
 }
 
-document.addEventListener("click", clickEvent)
-
+const countryCards = (card) => {
+    return `
+        <div id="card"></div>
+    `
 }
 
+const loadEvent = async _ => {
+    // GET DATA
+    const countryRes = await fetch("https://restcountries.com/v3.1/all");
+    const countryArr = await countryRes.json();
+    // console.log(countryArr[0]);
+    // PROCESS DATA
+    let countries = countryArr.map(function(country){
+        return new Country(country.name.common, country.cca3, country.population, country.flags.svg, country.continents[0])
+    })
+    console.log(countries)
+
+    const rootElement = document.getElementById("root")
+    rootElement.insertAdjacentHTML("beforeend", header("Countries"))
+};
 
 window.addEventListener("load", loadEvent)
