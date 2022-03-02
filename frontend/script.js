@@ -8,12 +8,23 @@ function Country(name, short, population, flag, continent){
 };
 
 // COMPONENTS
+const menuButton = _ => {
+    return `
+    <button>
+        <svg width="40" height="40">
+            <rect width="20" height="2" />
+            <rect width="20" height="2" />
+            <rect width="20" height="2" />
+        </svg>
+    </button>
+    `
+}
 
-const header = (logo) => {
+const header = (logo, button) => {
     return `
         <header>
-            <a id="logo">${logo}</a>
-            <button></button>
+        <a id="logo">${logo}</a>
+            ${button()}
         </header>    
     `
 }
@@ -37,6 +48,7 @@ const countryCards = (contentHTML) => {
 }
 
 
+
 const loadEvent = async _ => {
     // GET DATA
     const countryRes = await fetch("https://restcountries.com/v3.1/all");
@@ -50,7 +62,7 @@ const loadEvent = async _ => {
 
     const rootElement = document.getElementById("root");
     
-    rootElement.insertAdjacentHTML("beforeend", header("Countries"));
+    rootElement.insertAdjacentHTML("beforeend", header("Countries", menuButton));
     
     let countryHTML = "";
     for (const country of countries) {
