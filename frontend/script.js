@@ -18,17 +18,12 @@ const header = (logo) => {
     `
 }
 
-const countryCards = (cards) => {
+const countryCard = (cards) => {
     return `
         <div id="cards"></div>
     `
 }
 
-const countryCards = (card) => {
-    return `
-        <div id="card"></div>
-    `
-}
 
 const loadEvent = async _ => {
     // GET DATA
