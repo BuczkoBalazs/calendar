@@ -32,7 +32,7 @@ const countryCard = (country) => {
 
 const countryCards = (contentHTML) => {
     return `
-    <section class="country-cards">${contentHTML}</sectio>
+    <section class="country-cards">${contentHTML}</section>
     `
 }
 
