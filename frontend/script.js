@@ -10,7 +10,7 @@ function Country(name, short, population, flag, continent){
 // COMPONENTS
 const menuButton = _ => {
     return `
-    <button>
+    <button id="menuButton">
         <svg width="40" height="40">
             <rect width="20" height="2" />
             <rect width="20" height="2" />
@@ -69,6 +69,13 @@ const loadEvent = async _ => {
         countryHTML += countryCard(country)
     }
     rootElement.insertAdjacentHTML("beforeend", countryCards(countryHTML))
+
+    // CLICKEVENT
+    const getMenuButton = document.getElementById("menuButton")
+    getMenuButton.addEventListener("click", (event) => {
+        event.target.classList.toggle("clicked");
+    })
+
 
 };
 
