@@ -56,7 +56,6 @@ const dayCards = (month, callDayCard) => {
     for (let i = 1; i <= month.days; i++) {
         toReturn += callDayCard(2022, month.nth, i);
     }
-
     return toReturn;
 };
 // console.log(dayCards(months[0], dayCard));
