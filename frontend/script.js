@@ -52,7 +52,7 @@ const formHTML = () => {
 };
 
 
-const loadEvent = _ => {
+const loadEvent = async _ => {
 
     const rootElement = document.getElementById("root");
     
@@ -86,9 +86,23 @@ const loadEvent = _ => {
     form.querySelector("select").addEventListener("input", (e) => {
         console.log(e.target.value)
     });
+    const apiKey = "7ju7WWOshTgaMnMDVMQCe1DITfBsMJfO5rXe61hn"
+    const requestedDate = "2020-02-22"
+    const apod = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${requestedDate}`);
 
+    const apodJson = await apod.json();
+    // console.log(apodJson.explanation);
 
-
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${requestedDate}`).then(
+        function (apodResponse) {
+            console.log(apodResponse);
+            apodResponse.json().then(
+                function (apodResponseJson) {
+                    console.log(apodResponseJson.explanation)
+                }
+            )
+        }
+    );
 };
 
 window.addEventListener("load", loadEvent)
